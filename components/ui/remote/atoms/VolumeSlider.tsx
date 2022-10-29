@@ -1,9 +1,7 @@
 import { transform } from "@babel/core"
 import React, { FC, ReactElement, useState } from "react"
 import { View, StyleSheet, Pressable } from "react-native"
-// import ReactSlider from "react-slider"
-import Slider, { SliderProps } from "@react-native-community/slider"
-// import { Slider, Text, Icon } from "@rneui/themed"
+import VerticalSlider from "rn-vertical-slider"
 
 export interface VolumeSliderProps {
   readonly styleProps?: {}
@@ -12,7 +10,7 @@ export interface VolumeSliderProps {
 export const VolumeSlider: FC<VolumeSliderProps> = ({
   styleProps
 }: VolumeSliderProps): ReactElement => {
-  const [vertValue, setVertValue] = useState(0)
+  const [vertValue, setVertValue] = useState(1)
   const styles = StyleSheet.create({
     verticalContent: {
       padding: 0,
@@ -20,18 +18,27 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
       flexDirection: "row",
       height: 500,
       justifyContent: "center",
-      alignItems: "stretch"
+      alignItems: "stretch",
+      ...styleProps
     }
   })
 
   return (
     <View style={styles.verticalContent}>
-      <Slider
+      <VerticalSlider
         value={vertValue}
-        onValueChange={setVertValue}
-        maximumValue={100}
-        minimumValue={0}
+        disabled={false}
+        min={0}
+        max={100}
+        onChange={(value: number) => {
+          setVertValue(value)
+        }}
+        width={10}
+        height={300}
         step={1}
+        borderRadius={5}
+        minimumTrackTintColor={"gray"}
+        maximumTrackTintColor={"tomato"}
       />
     </View>
   )

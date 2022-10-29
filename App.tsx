@@ -1,5 +1,5 @@
 import StorybookUIRoot from "./.ondevice/Storybook"
-import Remote from "./components/remote/screens/Remote"
+import Remote from "./components/ui/remote/screens/Remote"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 const App = () => {
   return (

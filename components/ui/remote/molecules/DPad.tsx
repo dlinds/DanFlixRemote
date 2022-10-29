@@ -37,7 +37,8 @@ export const DPad: FC<DPadProps> = ({ diameter }: DPadProps): ReactElement => {
         rotation="right"
         styleProps={{
           top: "43%",
-          left: "65%"
+          left: "65%",
+          position: "absolute"
         }}
         length={diameter / 4}
         onPress={() => handleOnDPadTap("borderLeftWidth")}
@@ -47,7 +48,8 @@ export const DPad: FC<DPadProps> = ({ diameter }: DPadProps): ReactElement => {
         rotation="left"
         styleProps={{
           top: "43%",
-          right: "65%"
+          right: "65%",
+          position: "absolute"
         }}
         length={diameter / 4}
         onPress={() => handleOnDPadTap("borderRightWidth")}
@@ -57,7 +59,8 @@ export const DPad: FC<DPadProps> = ({ diameter }: DPadProps): ReactElement => {
         rotation="up"
         styleProps={{
           top: "3%",
-          left: "25%"
+          left: "25%",
+          position: "absolute"
         }}
         length={diameter / 4}
         onPress={() => handleOnDPadTap("borderBottomWidth")}
@@ -67,7 +70,8 @@ export const DPad: FC<DPadProps> = ({ diameter }: DPadProps): ReactElement => {
         rotation="down"
         styleProps={{
           bottom: "3%",
-          left: "25%"
+          left: "25%",
+          position: "absolute"
         }}
         length={diameter / 4}
         onPress={() => handleOnDPadTap("borderTopWidth")}

@@ -27,7 +27,8 @@
     "react-native-safe-area-context": "3.1.9",
     "react-native-svg": "^13.4.0",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-web": "^0.18.9"
+    "react-native-web": "^0.18.9",
+    "rn-vertical-slider": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
