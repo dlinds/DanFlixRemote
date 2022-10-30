@@ -9,6 +9,6 @@ const App = () => {
   )
 }
 
-const LOAD_STORYBOOK = true
+const LOAD_STORYBOOK = false
 
 export default LOAD_STORYBOOK ? StorybookUIRoot : App

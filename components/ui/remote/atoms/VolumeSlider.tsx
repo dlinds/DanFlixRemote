@@ -2,6 +2,7 @@ import { transform } from "@babel/core"
 import React, { FC, ReactElement, useState, useEffect } from "react"
 import { View, StyleSheet, Pressable, Text } from "react-native"
 import VerticalSlider from "rn-vertical-slider"
+import { denonSendCommand, volumeStatus } from "../../../modules/Denon/denon"
 import Button from "./Button"
 
 export interface VolumeSliderProps {
@@ -11,24 +12,41 @@ export interface VolumeSliderProps {
 export const VolumeSlider: FC<VolumeSliderProps> = ({
   styleProps
 }: VolumeSliderProps): ReactElement => {
-  const [vertValue, setVertValue] = useState(1)
+  const [vertValue, setVertValue] = useState(0)
+  const getCurrentVolume = async () => {
+    await volumeStatus().then(res => {
+      setVertValue(res)
+    })
+  }
+  useEffect(() => {
+    getCurrentVolume()
+  }, [])
 
   const handleVolumeDown = () => {
-    vertValue > 0 && setVertValue(prev => prev - 1)
+    vertValue > 0 && setVertValue(prev => prev - 0.5)
+    denonSendCommand("MV", "DOWN")
   }
 
   const handleVolumeUp = () => {
-    vertValue < 100 && setVertValue(prev => prev + 1)
+    vertValue < 60 && setVertValue(prev => prev + 0.5)
+    denonSendCommand("MV", "UP")
   }
 
   const handleMuteVolume = () => {
     setVertValue(1)
     setIsMuteIcon("volume-off")
     setVertValue(0)
+    denonSendCommand("MV", 0)
+  }
+
+  const handleSetExactVolume = (value: number) => {
+    setVertValue(value)
+    denonSendCommand("MV", value)
   }
 
   const handleMaxVolume = () => {
-    setVertValue(100)
+    setVertValue(60)
+    denonSendCommand("MV", 60)
   }
 
   const styles = StyleSheet.create({
@@ -37,7 +55,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
-      height: 400
+      height: 450
     }
   })
 
@@ -56,19 +74,19 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         size={40}
         title="volume-up"
         onPress={() => handleVolumeUp()}
-        onLongPress={() => setVertValue(100)}
+        onLongPress={() => handleMaxVolume()}
       ></Button>
       <VerticalSlider
         value={vertValue}
         disabled={false}
         min={0}
-        max={100}
+        max={60}
         onChange={(value: number) => {
-          setVertValue(value)
+          handleSetExactVolume(value)
         }}
         width={25}
         height={300}
-        step={1}
+        step={0.5}
         borderRadius={15}
         minimumTrackTintColor={"#79DBDB"}
         maximumTrackTintColor={"#33666d"}
@@ -83,6 +101,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         onPress={() => handleVolumeDown()}
         onLongPress={() => handleMuteVolume()}
       ></Button>
+      <Text>current: {vertValue}</Text>
     </View>
   )
 }

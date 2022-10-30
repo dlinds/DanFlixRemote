@@ -1,13 +1,13 @@
+const XMLParser = require("react-xml-parser")
+
 type Command = "PW" | "ZM" | "MV"
 type XMLPath = "AppCommand.xml" | "formiPhoneAppDirect.xml"
-type ActionName = "Power On" | "Power Standby" | "Power Status"
+type Parameter = "ON" | "OFF" | "UP" | "DOWN" | number
 
 const url = "http://192.168.0.55:8080/goform/"
 
-export const powerSendCommand = (action: ActionName) => {
-  const parameter = action === "Power On" ? "ON" : "STANDBY"
-  const command: Command = "PW"
-  const xmlPath = "formiPhoneAppDirect.xml"
+export const denonSendCommand = (command: Command, parameter: Parameter) => {
+  const xmlPath: XMLPath = "formiPhoneAppDirect.xml"
   const urlStr = `${url}${xmlPath}?${command}${parameter}`
   fetch(urlStr)
     .then(res => res.toString())
@@ -28,7 +28,9 @@ export const powerStatus = async () => {
     redirect: "follow"
   }
 
-  const response = await fetch(`${url}AppCommand.xml`, requestOptions)
+  const xmlPath: XMLPath = "AppCommand.xml"
+
+  const response = await fetch(`${url}${xmlPath}`, requestOptions)
     .then(response => response.text())
     .then(result => result)
     .catch(error => console.log("error", error))
@@ -37,4 +39,31 @@ export const powerStatus = async () => {
   const status = extractedStatus && extractedStatus[1]
   console.log(status)
   return status === "ON" ? true : false
+}
+
+export const volumeStatus = () => {
+  const myHeaders = new Headers()
+  myHeaders.append("Content-Type", "text/plain")
+
+  const raw =
+    '<?xml version="1.0" encoding="utf-8"?>\r\n<tx>\r\n  <cmd id="1">GetAllZoneVolume</cmd>\r\n</tx>'
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow"
+  }
+
+  const xmlPath: XMLPath = "AppCommand.xml"
+
+  const response = fetch(`${url}${xmlPath}`, requestOptions)
+    .then(res => res.text())
+    .then(data => {
+      const xml = new XMLParser().parseFromString(data)
+      return xml.children[0].children[0].children[4].value
+    })
+    .catch(error => console.log("error", error))
+
+  return response
 }

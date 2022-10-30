@@ -2,7 +2,7 @@ import React from "react"
 import { View, StyleSheet, Dimensions } from "react-native"
 import { VolumeSlider } from "../atoms/VolumeSlider"
 import { DPad } from "../molecules/DPad"
-import { powerSendCommand, powerStatus } from "../../../modules/Denon/denon"
+import { denonSendCommand } from "../../../modules/Denon/denon"
 import Button from "../atoms/Button"
 
 const Remote = () => {
@@ -27,7 +27,7 @@ const Remote = () => {
           <Button
             variant="standard"
             title="DanFlix"
-            onPress={() => powerSendCommand("Power Standby")}
+            onPress={() => denonSendCommand("PW", "ON")}
           />
           <Button variant="standard" title="ChromeCast" onPress={() => {}} />
           <Button variant="standard" title="Switch" onPress={() => {}} />
