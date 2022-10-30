@@ -31,7 +31,10 @@ try {
 
 const getStories = () => {
   return [
-    require("../components/ui/remote/atoms/Button.stories.tsx"),
+    require("../components/ui/atoms/Button.stories.tsx"),
+    require("../components/ui/preset/atoms/ExpandedInfo.stories.tsx"),
+    require("../components/ui/preset/molecules/Preset.stories.tsx"),
+    require("../components/ui/preset/molecules/PresetInfo.stories.tsx"),
     require("../components/ui/remote/atoms/DPadArrow.stories.tsx"),
     require("../components/ui/remote/atoms/DPadSelect.stories.tsx"),
     require("../components/ui/remote/atoms/VolumeSlider.stories.tsx"),

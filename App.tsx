@@ -40,7 +40,7 @@ const App = () => {
           }}
         >
           <View
-            style={{ height: "100%", width: "66%", backgroundColor: "pink" }}
+            style={{ height: "95%", width: "66%", backgroundColor: "pink" }}
           ></View>
           <View style={{ width: "33%", height: "95%" }}>
             <Remote />
@@ -51,6 +51,6 @@ const App = () => {
   )
 }
 
-const LOAD_STORYBOOK = false
+const LOAD_STORYBOOK = true
 
 export default LOAD_STORYBOOK ? StorybookUIRoot : App

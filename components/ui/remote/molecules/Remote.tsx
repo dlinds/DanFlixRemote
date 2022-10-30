@@ -3,7 +3,7 @@ import { View, StyleSheet, Dimensions } from "react-native"
 import { VolumeSlider } from "../atoms/VolumeSlider"
 import { DPad } from "./DPad"
 import { denonSendCommand } from "../../../modules/Denon/denon"
-import Button from "../atoms/Button"
+import Button from "../../atoms/Button"
 import {} from "@reduxjs/toolkit"
 // import appColors from "../../../assets/appColors"
 import { Shadow } from "react-native-shadow-2"
@@ -18,32 +18,12 @@ const Remote = () => {
           <View style={styles.controls}>
             <DPad diameter={windowHeight * 0.37} />
             <View style={styles.controlSet}>
-              <Button
-                variant="icon"
-                title="play"
-                onPress={() => {}}
-                size={40}
-              />
-              <Button
-                variant="icon"
-                title="stop"
-                onPress={() => {}}
-                size={40}
-              />
+              <Button variant="icon" title="play" size={40} />
+              <Button variant="icon" title="stop" size={40} />
             </View>
             <View style={styles.controlSet}>
-              <Button
-                variant="icon"
-                title="fast-backward"
-                onPress={() => {}}
-                size={40}
-              />
-              <Button
-                variant="icon"
-                title="fast-forward"
-                onPress={() => {}}
-                size={40}
-              />
+              <Button variant="icon" title="fast-backward" size={40} />
+              <Button variant="icon" title="fast-forward" size={40} />
             </View>
           </View>
           <View style={styles.volumeSlider}>

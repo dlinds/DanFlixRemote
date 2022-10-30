@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { TouchableOpacity, Text, StyleSheet } from "react-native"
+import { TouchableOpacity, Text, StyleSheet, View } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome"
 
 export interface ButtonProps {
@@ -7,10 +7,9 @@ export interface ButtonProps {
   readonly title: string
   readonly isActiveInput?: boolean
   readonly alternativeColor?: string
-  readonly onPress: () => void
-  readonly onPressOut?: () => void
-  readonly onLongPress?: () => void
   readonly size?: number
+  readonly containerProps?: {}
+  readonly textProps?: {}
 }
 
 const Button: FC<ButtonProps> = ({
@@ -18,10 +17,9 @@ const Button: FC<ButtonProps> = ({
   title,
   isActiveInput,
   alternativeColor,
-  onPress,
-  onPressOut,
-  onLongPress,
-  size = 100
+  size = 100,
+  containerProps,
+  textProps
 }: ButtonProps) => {
   const styles = StyleSheet.create({
     circleButton: {
@@ -35,20 +33,24 @@ const Button: FC<ButtonProps> = ({
       elevation: 5
     },
     button: {
+      display: "flex",
+      justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "#33666d",
+      backgroundColor: "#43697A",
       padding: 12,
-      marginBottom: 20,
       paddingLeft: 25,
       paddingRight: 25,
       borderRadius: 5,
-      width: "70%",
-      elevation: 5
+      width: "100%",
+      minHeight: 50,
+      elevation: 5,
+      ...containerProps
     },
     buttonText: {
       color: "white",
       letterSpacing: 1.5,
-      fontWeight: "500"
+      fontWeight: "500",
+      ...textProps
     },
     activeButton: {
       backgroundColor: "#79DBDB"
@@ -67,23 +69,13 @@ const Button: FC<ButtonProps> = ({
     : styles.buttonText
   const renderedButton =
     variant === "standard" ? (
-      <TouchableOpacity
-        style={buttonStyle}
-        onPress={onPress}
-        onPressOut={onPressOut}
-        onLongPress={onLongPress}
-      >
+      <View style={buttonStyle}>
         <Text style={textStyle}>{title.toUpperCase()}</Text>
-      </TouchableOpacity>
+      </View>
     ) : (
-      <TouchableOpacity
-        onPress={onPress}
-        onPressOut={onPressOut}
-        onLongPress={onLongPress}
-        style={styles.circleButton}
-      >
+      <View style={styles.circleButton}>
         <Icon name={title} size={size / 2} color="white" />
-      </TouchableOpacity>
+      </View>
     )
   return renderedButton
 }

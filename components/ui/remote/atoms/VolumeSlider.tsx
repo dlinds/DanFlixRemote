@@ -3,7 +3,7 @@ import React, { FC, ReactElement, useState, useEffect } from "react"
 import { View, StyleSheet, Pressable, Text } from "react-native"
 import VerticalSlider from "rn-vertical-slider"
 import { denonSendCommand, volumeStatus } from "../../../modules/Denon/denon"
-import Button from "./Button"
+import Button from "../../atoms/Button"
 
 export interface VolumeSliderProps {
   readonly styleProps?: {}
