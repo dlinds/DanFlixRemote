@@ -1,17 +1,19 @@
 import React from "react"
-import { View, StyleSheet, TouchableOpacity, Text, Alert } from "react-native"
+import { View, StyleSheet, Dimensions } from "react-native"
 import { VolumeSlider } from "../atoms/VolumeSlider"
 import { DPad } from "../molecules/DPad"
-
+import { powerSendCommand, powerStatus } from "../../../modules/Denon/denon"
 import Button from "../atoms/Button"
 
 const Remote = () => {
+  const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
+
   return (
     <View style={styles.container}>
       <View style={styles.emptySpace}></View>
       <View style={styles.center}>
-        <DPad diameter={250} />
-        <View style={styles.controls}>
+        <DPad diameter={windowHeight * 0.4} />
+        {/* <View style={styles.controls}>
           <View style={styles.controlSet}>
             <Button variant="icon" title="play" onPress={() => {}} />
             <Button variant="icon" title="stop" onPress={() => {}} />
@@ -20,14 +22,12 @@ const Remote = () => {
             <Button variant="icon" title="fast-backward" onPress={() => {}} />
             <Button variant="icon" title="fast-forward" onPress={() => {}} />
           </View>
-        </View>
+        </View> */}
         <View style={styles.buttonContainer}>
           <Button
             variant="standard"
             title="DanFlix"
-            onPress={() => {
-              console.log("getDenonStatus")
-            }}
+            onPress={() => powerSendCommand("Power Standby")}
           />
           <Button variant="standard" title="ChromeCast" onPress={() => {}} />
           <Button variant="standard" title="Switch" onPress={() => {}} />
