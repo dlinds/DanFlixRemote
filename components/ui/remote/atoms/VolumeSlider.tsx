@@ -55,7 +55,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
-      height: 450
+      height: "92%"
     }
   })
 
@@ -101,7 +101,6 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         onPress={() => handleVolumeDown()}
         onLongPress={() => handleMuteVolume()}
       ></Button>
-      <Text>current: {vertValue}</Text>
     </View>
   )
 }

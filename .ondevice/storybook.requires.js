@@ -36,7 +36,7 @@ const getStories = () => {
     require("../components/ui/remote/atoms/DPadSelect.stories.tsx"),
     require("../components/ui/remote/atoms/VolumeSlider.stories.tsx"),
     require("../components/ui/remote/molecules/DPad.stories.tsx"),
-    require("../components/ui/remote/screens/Remote.stories.tsx")
+    require("../components/ui/remote/molecules/Remote.stories.tsx")
   ]
 }
 
