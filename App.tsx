@@ -1,29 +1,28 @@
 import StorybookUIRoot from "./.ondevice/Storybook"
 import Remote from "./components/ui/remote/molecules/Remote"
 import { SafeAreaProvider } from "react-native-safe-area-context"
-import { configureStore } from "@reduxjs/toolkit"
 import { Provider } from "react-redux"
 import React, { useState } from "react"
-import { volumeStatus } from "./components/modules/Denon/denon"
+import store from "./components/modules/store"
 import { View } from "react-native"
 // import { appColors } from "./components/assets/appColors"
 const App = () => {
-  const [currentVolume, setCurrentVolume] = useState()
+  // const [currentVolume, setCurrentVolume] = useState()
 
-  const getCurrentVolume = async () => {
-    await volumeStatus().then(res => setCurrentVolume(res))
-  }
+  // const getCurrentVolume = async () => {
+  //   await volumeStatus().then(res => setCurrentVolume(res))
+  // }
 
-  const rootReducer = (
-    state = { currentVolume: currentVolume },
-    action: any
-  ) => {
-    getCurrentVolume()
-    return state
-  }
+  // const rootReducer = (
+  //   state = { currentVolume: currentVolume },
+  //   action: any
+  // ) => {
+  //   getCurrentVolume()
+  //   return state
+  // }
 
-  const store = configureStore({ reducer: rootReducer })
-  console.log(currentVolume)
+  // const store = configureStore({ reducer: rootReducer })
+  // console.log(currentVolume)
 
   return (
     <Provider store={store}>
@@ -51,6 +50,6 @@ const App = () => {
   )
 }
 
-const LOAD_STORYBOOK = true
+const LOAD_STORYBOOK = false
 
 export default LOAD_STORYBOOK ? StorybookUIRoot : App

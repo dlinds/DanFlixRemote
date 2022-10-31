@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
+import Button from "../../atoms/Button"
 import PresetInfo from "./PresetInfo"
 
 export interface PresetProps {
@@ -26,7 +27,7 @@ const Preset = ({ inputList }: PresetProps) => {
   }
 
   return (
-    <View>
+    <>
       {inputListItems.map((preset, index) => {
         return !preset.isActive ? (
           <TouchableOpacity
@@ -36,10 +37,10 @@ const Preset = ({ inputList }: PresetProps) => {
             <PresetInfo {...preset} />
           </TouchableOpacity>
         ) : (
-          <PresetInfo {...preset} />
+          <PresetInfo {...preset} key={index} />
         )
       })}
-    </View>
+    </>
   )
 }
 
