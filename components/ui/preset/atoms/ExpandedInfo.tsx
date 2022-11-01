@@ -2,17 +2,19 @@ import React from "react"
 import { View, StyleSheet, Text } from "react-native"
 
 export interface ExpandedInfoProps {
-  receiverStatus: boolean
-  receiverInput: string
-  tvStatus: boolean
-  activeRemote: string
+  readonly receiverStatus: boolean
+  readonly receiverInput: string
+  readonly tvStatus: boolean
+  readonly activeRemote: string
+  readonly containerProps?: {}
 }
 
 const ExpandedInfo = ({
   receiverStatus,
   receiverInput,
   tvStatus,
-  activeRemote
+  activeRemote,
+  containerProps
 }: ExpandedInfoProps) => {
   const styles = StyleSheet.create({
     container: {
@@ -20,13 +22,14 @@ const ExpandedInfo = ({
       height: "auto",
       width: "100%",
       borderColor: "gray",
-      borderWidth: 3,
+      borderWidth: 1,
       borderTopWidth: 0,
       borderBottomEndRadius: 10,
       borderBottomStartRadius: 10,
       display: "flex",
       flexDirection: "column",
-      padding: "2%"
+      padding: "2%",
+      ...containerProps
     },
     text: {
       color: "white",

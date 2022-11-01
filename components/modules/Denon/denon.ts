@@ -1,20 +1,39 @@
-const XMLParser = require("react-xml-parser")
+import { RateLimiter } from "limiter"
+
+export const XMLParser = require("react-xml-parser")
 
 type Command = "PW" | "ZM" | "MV"
 type XMLPath = "AppCommand.xml" | "formiPhoneAppDirect.xml"
-type Parameter = "ON" | "OFF" | "UP" | "DOWN" | number
+type Parameter = "ON" | "STANDBY" | "UP" | "DOWN" | number
+type Method = "SEND" | "STATUS"
 
-const url = "http://192.168.0.55:8080/goform/"
+export const url = "http://192.168.0.55:8080/goform/"
 
-export const denonSendCommand = (command: Command, parameter: Parameter) => {
-  const xmlPath: XMLPath = "formiPhoneAppDirect.xml"
-  const urlStr = `${url}${xmlPath}?${command}${parameter}`
-  fetch(urlStr)
-    .then(res => res.toString())
-    .then(resStr => console.log(resStr))
+const limiter = new RateLimiter({ tokensPerInterval: 1, interval: 500 })
+
+export const callDenon = async (
+  type: Method,
+  command: Command,
+  parameter?: Parameter
+) => {
+  const remainingMessages = await limiter.removeTokens(1)
+
+  if (type === "SEND" && parameter) {
+    return await sendCommand(command, parameter)
+  }
+
+  if (type === "STATUS") {
+    return command === "MV" ? await statusVolume() : await statusPower()
+  }
 }
 
-export const powerStatus = async () => {
+const sendCommand = async (command: Command, parameter: Parameter) => {
+  const xmlPath: XMLPath = "formiPhoneAppDirect.xml"
+  const urlStr = `${url}${xmlPath}?${command}${parameter}`
+  await fetch(urlStr).then(res => res.toString())
+}
+
+const statusPower = async () => {
   const myHeaders = new Headers()
   myHeaders.append("Content-Type", "text/plain")
 
@@ -41,7 +60,7 @@ export const powerStatus = async () => {
   return status === "ON" ? true : false
 }
 
-export const volumeStatus = () => {
+const statusVolume = () => {
   const myHeaders = new Headers()
   myHeaders.append("Content-Type", "text/plain")
 

@@ -17,9 +17,8 @@ const PresetInfo = ({ isActive, inputName }: PresetInfoProps) => {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "flex-start",
-      borderRadius: 6,
-      elevation: 10
-      // backgroundColor: "pink"
+      elevation: 5,
+      marginBottom: 8
     }
   })
 
@@ -28,9 +27,13 @@ const PresetInfo = ({ isActive, inputName }: PresetInfoProps) => {
       <Button
         variant="standard"
         title={inputName}
-        containerProps={{ alignItems: "flex-start", marginTop: 4 }}
-        textProps={{ letterSpacing: 5 }}
+        containerProps={{
+          alignItems: "flex-start",
+          paddingLeft: 15
+        }}
+        textProps={{ letterSpacing: 5, fontSize: 12 }}
         isActiveInput={isActive}
+        size={43}
       />
       {isActive && (
         <ExpandedInfo
@@ -38,6 +41,9 @@ const PresetInfo = ({ isActive, inputName }: PresetInfoProps) => {
           receiverInput={inputName}
           tvStatus={true}
           activeRemote={inputName}
+          containerProps={{
+            paddingLeft: 15
+          }}
         />
       )}
     </View>

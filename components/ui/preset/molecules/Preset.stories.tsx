@@ -22,7 +22,7 @@ export const Basic: ComponentStory<typeof Preset> = args => {
   )
 }
 
-const seedInputs = [
+export const seedInputs = [
   {
     isActive: false,
     inputName: "DanFlix"

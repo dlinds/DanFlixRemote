@@ -1,38 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { denonSendCommand, volumeStatus } from "./denon"
-const getCurrentVolume = async () => {
-  await volumeStatus().then(res => {
-    initialState.volume = res
-  })
-}
+import { callDenon } from "./denon"
 
 const initialState = {
-  volume: 0
+  volume: 30
 }
-
-getCurrentVolume()
 
 const volumeSlice = createSlice({
   name: "volume",
   initialState,
   reducers: {
+    setInitialState: (state, action) => {
+      return { ...state, volume: action.payload }
+    },
     increment: state => {
       const currentState = { ...state, volume: state.volume + 0.5 }
-      denonSendCommand("MV", "UP")
+      callDenon("SEND", "MV", "UP")
       return { ...currentState }
     },
     decrement: state => {
       const currentState = { ...state, volume: state.volume - 0.5 }
-      denonSendCommand("MV", "DOWN")
+      callDenon("SEND", "MV", "DOWN")
       return { ...currentState }
     },
-    setExact: (state, action) => {
+    setExact: (state, action?) => {
       const currentState = { ...state, volume: (state.volume = action.payload) }
-      denonSendCommand("MV", action.payload)
+      action && callDenon("SEND", "MV", action.payload)
       return { ...currentState }
     }
   }
 })
 
-export const { increment, decrement, setExact } = volumeSlice.actions
+export const {
+  increment,
+  decrement,
+  setExact,
+  setInitialState
+} = volumeSlice.actions
 export default volumeSlice.reducer

@@ -17,15 +17,17 @@ const Button: FC<ButtonProps> = ({
   title,
   isActiveInput,
   alternativeColor,
-  size = 100,
+  size,
   containerProps,
   textProps
 }: ButtonProps) => {
+  const calcSize = size ? size : 100
+
   const styles = StyleSheet.create({
     circleButton: {
-      height: size,
-      width: size,
-      borderRadius: size / 2,
+      height: calcSize,
+      width: calcSize,
+      borderRadius: calcSize / 2,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -42,7 +44,8 @@ const Button: FC<ButtonProps> = ({
       paddingRight: 25,
       borderRadius: 5,
       width: "100%",
-      minHeight: 50,
+      height: calcSize ? calcSize : 10,
+      minHeight: 40,
       elevation: 5,
       ...containerProps
     },
@@ -74,7 +77,7 @@ const Button: FC<ButtonProps> = ({
       </View>
     ) : (
       <View style={styles.circleButton}>
-        <Icon name={title} size={size / 2} color="white" />
+        <Icon name={title} size={calcSize / 2} color="white" />
       </View>
     )
   return renderedButton

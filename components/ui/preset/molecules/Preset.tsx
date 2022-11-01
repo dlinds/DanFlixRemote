@@ -27,7 +27,14 @@ const Preset = ({ inputList }: PresetProps) => {
   }
 
   return (
-    <>
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100%"
+      }}
+    >
       {inputListItems.map((preset, index) => {
         return !preset.isActive ? (
           <TouchableOpacity
@@ -40,7 +47,7 @@ const Preset = ({ inputList }: PresetProps) => {
           <PresetInfo {...preset} key={index} />
         )
       })}
-    </>
+    </View>
   )
 }
 
