@@ -1,13 +1,6 @@
-import React, { FC, ReactElement, useState, useEffect } from "react"
-import {
-  View,
-  StyleSheet,
-  Pressable,
-  Text,
-  TouchableOpacity
-} from "react-native"
+import React, { FC, ReactElement, useState } from "react"
+import { View, StyleSheet, TouchableOpacity } from "react-native"
 import VerticalSlider from "rn-vertical-slider"
-import { denonSendCommand, volumeStatus } from "../../../modules/Denon/denon"
 import Button from "../../atoms/Button"
 import { increment, decrement, setExact } from "../../../modules/Denon/volume"
 import { useSelector, useDispatch } from "react-redux"
@@ -26,22 +19,17 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
 
   const handleVolumeDown = () => {
     currentVolume > 0 &&
-      (setVertValue(prev => prev - 0.5),
-      dispatch(decrement()),
-      denonSendCommand("MV", "DOWN"))
+      (setVertValue(prev => prev - 0.5), dispatch(decrement()))
   }
 
   const handleVolumeUp = () => {
     currentVolume < 60 &&
-      (setVertValue(prev => prev + 0.5),
-      dispatch(increment()),
-      denonSendCommand("MV", "UP"))
+      (setVertValue(prev => prev + 0.5), dispatch(increment()))
   }
 
   const handleSetExactVolume = (value: number) => {
     setVertValue(value)
     dispatch(setExact(value))
-    denonSendCommand("MV", value)
     setIsMuteIcon(value > 0 ? "volume-down" : "volume-off")
   }
 
@@ -60,7 +48,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
   )
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...styleProps }}>
       <TouchableOpacity
         onPress={() => handleVolumeUp()}
         onLongPress={() => handleSetExactVolume(60)}
@@ -68,7 +56,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         <Button variant="icon" size={40} title="volume-up"></Button>
       </TouchableOpacity>
       <VerticalSlider
-        value={currentVolume}
+        value={vertValue}
         disabled={false}
         min={0}
         max={60}
