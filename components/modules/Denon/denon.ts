@@ -30,7 +30,9 @@ export const callDenon = async (
 const sendCommand = async (command: Command, parameter: Parameter) => {
   const xmlPath: XMLPath = "formiPhoneAppDirect.xml"
   const urlStr = `${url}${xmlPath}?${command}${parameter}`
-  await fetch(urlStr).then(res => res.toString())
+  await fetch(urlStr)
+    .then(res => res.toString())
+    .catch(res => console.log(res))
 }
 
 const statusPower = async () => {
@@ -52,7 +54,7 @@ const statusPower = async () => {
   const response = await fetch(`${url}${xmlPath}`, requestOptions)
     .then(response => response.text())
     .then(result => result)
-    .catch(error => console.log("error", error))
+    .catch(error => console.log("get power status error", error))
   const extractedStatus =
     response && response.toString().match("<zone1>(.*)</zone1>")
   const status = extractedStatus && extractedStatus[1]
@@ -82,7 +84,7 @@ const statusVolume = () => {
       const xml = new XMLParser().parseFromString(data)
       return xml.children[0].children[0].children[4].value
     })
-    .catch(error => console.log("error", error))
+    .catch(error => console.log("get volume error", error))
 
   return response
 }

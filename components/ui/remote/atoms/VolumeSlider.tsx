@@ -6,9 +6,9 @@ import {
   increment,
   decrement,
   setExact,
-  setInitialState
+  setVolumeAtTurnOn
 } from "../../../modules/Denon/volume"
-import { useSelector, useDispatch } from "react-redux"
+import { useAppSelector, useAppDispatch } from "../../../modules/hooks"
 import { callDenon } from "../../../modules/Denon/denon"
 
 export interface VolumeSliderProps {
@@ -18,14 +18,16 @@ export interface VolumeSliderProps {
 export const VolumeSlider: FC<VolumeSliderProps> = ({
   styleProps
 }: VolumeSliderProps): ReactElement => {
-  const currentVolume: number = useSelector((state: any) => state.volume.volume)
-  const dispatch = useDispatch()
+  const currentVolume: number = useAppSelector(
+    (state: any) => state.volume.volume
+  )
+  const dispatch = useAppDispatch()
 
   const [vertValue, setVertValue] = useState(currentVolume)
 
   useEffect(() => {
     callDenon("STATUS", "MV").then(res => {
-      dispatch(setInitialState(res))
+      dispatch(setVolumeAtTurnOn(res))
       setVertValue(res)
     })
   }, [])
@@ -69,7 +71,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         <Button variant="icon" size={40} title="volume-up"></Button>
       </TouchableOpacity>
       <VerticalSlider
-        value={vertValue}
+        value={vertValue ? vertValue : 0}
         disabled={false}
         min={0}
         max={60}
@@ -91,8 +93,8 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         onLongPress={() => handleSetExactVolume(0)}
       >
         <Button variant="icon" size={40} title={isMuteIcon}></Button>
-        <Text>{vertValue}</Text>
       </TouchableOpacity>
+      <Text>{vertValue}</Text>
     </View>
   )
 }

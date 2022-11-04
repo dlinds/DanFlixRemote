@@ -1,18 +1,38 @@
-import React from "react"
-import { View, StyleSheet, Dimensions } from "react-native"
+import React, { useState, useEffect } from "react"
+import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native"
 import { VolumeSlider } from "../atoms/VolumeSlider"
 import { DPad } from "./DPad"
-// import { denonSendCommand } from "../../../modules/Denon/denon"
 import Button from "../../atoms/Button"
-import {} from "@reduxjs/toolkit"
-// import appColors from "../../../assets/appColors"
+import { useAppSelector, useAppDispatch } from "../../../modules/hooks"
+import {
+  powerOn,
+  powerOff,
+  setInitialPowerStatus
+} from "../../../modules/Denon/power"
 import { Shadow } from "react-native-shadow-2"
+import { callDenon } from "../../../modules/Denon/denon"
 
 const Remote = () => {
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
+  const currentPowerStatus: boolean = useAppSelector(
+    (state: any) => state.power.isPowered
+  )
+
+  // console.log(currentPowerStatus)
+
+  const dispatch = useAppDispatch()
+
+  const [isReceiverOn, setIsReceiverOn] = useState()
+
+  useEffect(() => {
+    callDenon("STATUS", "ZM").then(res => {
+      dispatch(setInitialPowerStatus(res))
+      setIsReceiverOn(res)
+    })
+  }, [])
 
   return (
-    <Shadow distance={6} startColor={"#ffff0070"} endColor={"#000"}>
+    <Shadow distance={6} startColor={"#59A5D870"} endColor={"#000"}>
       <View style={styles.container}>
         <View style={styles.remoteContainer}>
           <View style={styles.controls}>
@@ -25,6 +45,22 @@ const Remote = () => {
               <Button variant="icon" title="fast-backward" size={40} />
               <Button variant="icon" title="fast-forward" size={40} />
             </View>
+            <TouchableOpacity
+              style={{ marginTop: "15%" }}
+              onPress={
+                isReceiverOn
+                  ? () => dispatch(powerOff())
+                  : () => dispatch(powerOn())
+              }
+            >
+              <Button
+                variant="standard"
+                title={isReceiverOn ? "Power Off" : "Power On"}
+                size={40}
+                containerProps={{ backgroundColor: "#79DBDB" }}
+                textProps={{ fontSize: 12, color: "black" }}
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.volumeSlider}>
             <VolumeSlider />
@@ -36,22 +72,6 @@ const Remote = () => {
 }
 
 const styles = StyleSheet.create({
-  // overallContainer: {
-  //   position: "relative",
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   justifyContent: "center"
-  // },
-  // outerGlow: {
-  //   flex: 1,
-  //   position: "absolute",
-  //   height: "94%",
-  //   backgroundColor: "##ffff00",
-  //   opacity: 0.8,
-  //   borderRadius: 25,
-  //   width: "102%"
-  // },
   container: {
     display: "flex",
     backgroundColor: "#263D47",
@@ -79,7 +99,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "70%",
-    height: "75%",
+    height: "85%",
     maxWidth: 250
   },
   controlSet: {

@@ -3,7 +3,7 @@ import Remote from "./components/ui/remote/molecules/Remote"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Provider } from "react-redux"
 import React, { useState } from "react"
-import store from "./components/modules/store"
+import { store } from "./components/modules/store"
 import { View } from "react-native"
 import Preset from "./components/ui/preset/molecules/Preset"
 import { seedInputs } from "./components/ui/preset/molecules/Preset.stories"
@@ -49,7 +49,7 @@ const App = () => {
                 padding: 0
               }}
             >
-              <View style={{ height: "90%", width: "100%" }}>
+              <View style={{ height: "90%", width: "85%" }}>
                 <Preset inputList={seedInputs} />
               </View>
             </View>

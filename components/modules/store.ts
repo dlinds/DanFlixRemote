@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 import volumeSlice from "./Denon/volume"
 import powerSlice from "./Denon/power"
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     volume: volumeSlice,
     power: powerSlice
   }
 })
 
-export default store
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
