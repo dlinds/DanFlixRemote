@@ -21,6 +21,11 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
   const currentVolume: number = useAppSelector(
     (state: any) => state.volume.volume
   )
+
+  const currentPowerStatus: boolean = useAppSelector(
+    (state: any) => state.power.isPowered
+  )
+
   const dispatch = useAppDispatch()
 
   const [vertValue, setVertValue] = useState(currentVolume)
@@ -67,6 +72,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
       <TouchableOpacity
         onPress={() => handleVolumeUp()}
         onLongPress={() => handleSetExactVolume(60)}
+        disabled={currentPowerStatus ? false : true}
       >
         <Button variant="icon" size={40} title="volume-up"></Button>
       </TouchableOpacity>
@@ -91,10 +97,13 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
       <TouchableOpacity
         onPress={() => handleVolumeDown()}
         onLongPress={() => handleSetExactVolume(0)}
+        disabled={currentPowerStatus ? false : true}
       >
         <Button variant="icon" size={40} title={isMuteIcon}></Button>
       </TouchableOpacity>
-      <Text>{vertValue}</Text>
+      <Text>
+        {vertValue} {currentPowerStatus ? "true" : "false"}
+      </Text>
     </View>
   )
 }

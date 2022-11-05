@@ -32,6 +32,7 @@
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.18.9",
     "react-redux": "^8.0.4",
+    "react-router": "^6.4.3",
     "react-xml-parser": "^1.1.8",
     "redux": "^4.2.0",
     "rn-vertical-slider": "^2.0.2"

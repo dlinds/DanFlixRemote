@@ -21,7 +21,8 @@ export const powerSlice = createSlice({
       return { ...state, isPowered: true }
     },
     powerOff: state => {
-      callDenon("SEND", "ZM", "STANDBY")
+      console.log("powering off receiver")
+      callDenon("SEND", "PW", "STANDBY")
       return { ...state, isPowered: false }
     }
   }

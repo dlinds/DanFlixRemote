@@ -17,8 +17,7 @@ const PresetInfo = ({ isActive, inputName }: PresetInfoProps) => {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "flex-start",
-      elevation: 5,
-      marginBottom: 8
+      elevation: 5
     }
   })
 

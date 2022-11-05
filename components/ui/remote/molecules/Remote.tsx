@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react"
-import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native"
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Text
+} from "react-native"
 import { VolumeSlider } from "../atoms/VolumeSlider"
 import { DPad } from "./DPad"
 import Button from "../../atoms/Button"
@@ -22,14 +28,15 @@ const Remote = () => {
 
   const dispatch = useAppDispatch()
 
-  const [isReceiverOn, setIsReceiverOn] = useState()
-
   useEffect(() => {
     callDenon("STATUS", "ZM").then(res => {
       dispatch(setInitialPowerStatus(res))
-      setIsReceiverOn(res)
     })
   }, [])
+
+  const handlePressPowerButton = () => {
+    currentPowerStatus ? dispatch(powerOff()) : dispatch(powerOn())
+  }
 
   return (
     <Shadow distance={6} startColor={"#59A5D870"} endColor={"#000"}>
@@ -47,19 +54,30 @@ const Remote = () => {
             </View>
             <TouchableOpacity
               style={{ marginTop: "15%" }}
-              onPress={
-                isReceiverOn
-                  ? () => dispatch(powerOff())
-                  : () => dispatch(powerOn())
-              }
+              onPress={() => handlePressPowerButton()}
             >
-              <Button
-                variant="standard"
-                title={isReceiverOn ? "Power Off" : "Power On"}
-                size={40}
-                containerProps={{ backgroundColor: "#79DBDB" }}
-                textProps={{ fontSize: 12, color: "black" }}
-              />
+              <Shadow
+                distance={currentPowerStatus ? 4 : 0}
+                startColor={"#ffff0070"}
+                endColor={"#263D47"}
+                style={styles.shadow}
+              >
+                <Button
+                  variant="standard"
+                  title={currentPowerStatus ? "Power Off" : "Power On"}
+                  size={40}
+                  containerProps={
+                    currentPowerStatus
+                      ? { backgroundColor: "#79DBDB" }
+                      : { backgroundColor: "#43697A" }
+                  }
+                  textProps={
+                    currentPowerStatus
+                      ? { fontSize: 12, color: "black" }
+                      : { fontSize: 12, color: "white" }
+                  }
+                />
+              </Shadow>
             </TouchableOpacity>
           </View>
           <View style={styles.volumeSlider}>
@@ -86,7 +104,9 @@ const styles = StyleSheet.create({
     paddingStart: 25,
     height: "100%"
   },
-  deviceContainer: {},
+  shadow: {
+    borderRadius: 5
+  },
   remoteContainer: {
     display: "flex",
     flexDirection: "row",

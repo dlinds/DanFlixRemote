@@ -32,7 +32,8 @@ const Preset = ({ inputList }: PresetProps) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        height: "100%"
+        height: "100%",
+        width: "100%"
       }}
     >
       {inputListItems.map((preset, index) => {

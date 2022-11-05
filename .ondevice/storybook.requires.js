@@ -39,7 +39,8 @@ const getStories = () => {
     require("../components/ui/remote/atoms/DPadSelect.stories.tsx"),
     require("../components/ui/remote/atoms/VolumeSlider.stories.tsx"),
     require("../components/ui/remote/molecules/DPad.stories.tsx"),
-    require("../components/ui/remote/molecules/Remote.stories.tsx")
+    require("../components/ui/remote/molecules/Remote.stories.tsx"),
+    require("../components/ui/category/molecules/Category.stories.tsx")
   ]
 }
 
