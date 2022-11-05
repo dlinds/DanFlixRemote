@@ -4,17 +4,19 @@ import { View, StyleSheet, Text, Pressable } from "react-native"
 export interface DPadSelectProps {
   readonly diameter: number
   readonly styleProps?: {}
+  readonly disabled?: boolean
 }
 
 export const DPadSelect: FC<DPadSelectProps> = ({
   styleProps,
-  diameter
+  diameter,
+  disabled
 }: DPadSelectProps): ReactElement => {
   const [circleColor, setCircleColor] = useState("#59A5D8")
 
   const styles = StyleSheet.create({
     circle: {
-      borderColor: circleColor,
+      borderColor: disabled ? "#606060" : circleColor,
       borderWidth: diameter * 0.25,
       height: diameter,
       width: diameter,

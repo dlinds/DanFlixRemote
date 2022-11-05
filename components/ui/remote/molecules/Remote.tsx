@@ -43,14 +43,49 @@ const Remote = () => {
       <View style={styles.container}>
         <View style={styles.remoteContainer}>
           <View style={styles.controls}>
-            <DPad diameter={windowHeight * 0.37} />
+            <DPad
+              diameter={windowHeight * 0.37}
+              disabled={!currentPowerStatus ? true : false}
+            />
             <View style={styles.controlSet}>
-              <Button variant="icon" title="play" size={40} />
-              <Button variant="icon" title="stop" size={40} />
+              <Button
+                variant="icon"
+                title="play"
+                size={40}
+                containerProps={
+                  !currentPowerStatus && { backgroundColor: "#303030" }
+                }
+                childrenProps={!currentPowerStatus && { color: "#606060" }}
+              />
+              <Button
+                variant="icon"
+                title="stop"
+                size={40}
+                containerProps={
+                  !currentPowerStatus && { backgroundColor: "#303030" }
+                }
+                childrenProps={!currentPowerStatus && { color: "#606060" }}
+              />
             </View>
             <View style={styles.controlSet}>
-              <Button variant="icon" title="fast-backward" size={40} />
-              <Button variant="icon" title="fast-forward" size={40} />
+              <Button
+                variant="icon"
+                title="fast-backward"
+                size={40}
+                containerProps={
+                  !currentPowerStatus && { backgroundColor: "#303030" }
+                }
+                childrenProps={!currentPowerStatus && { color: "#606060" }}
+              />
+              <Button
+                variant="icon"
+                title="fast-forward"
+                size={40}
+                containerProps={
+                  !currentPowerStatus && { backgroundColor: "#303030" }
+                }
+                childrenProps={!currentPowerStatus && { color: "#606060" }}
+              />
             </View>
             <TouchableOpacity
               style={{ marginTop: "15%" }}
@@ -71,7 +106,7 @@ const Remote = () => {
                       ? { backgroundColor: "#79DBDB" }
                       : { backgroundColor: "#43697A" }
                   }
-                  textProps={
+                  childrenProps={
                     currentPowerStatus
                       ? { fontSize: 12, color: "black" }
                       : { fontSize: 12, color: "white" }

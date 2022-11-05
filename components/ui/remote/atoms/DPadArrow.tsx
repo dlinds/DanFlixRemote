@@ -7,6 +7,7 @@ export interface DPadArrowProps {
   readonly styleProps?: {}
   readonly onPress: () => void
   readonly offPress: () => void
+  readonly disabled?: boolean
 }
 
 export const DPadArrow: FC<DPadArrowProps> = ({
@@ -14,7 +15,8 @@ export const DPadArrow: FC<DPadArrowProps> = ({
   length,
   styleProps,
   onPress,
-  offPress
+  offPress,
+  disabled
 }: DPadArrowProps): ReactElement => {
   const getRotate = () => {
     switch (rotation) {
@@ -42,7 +44,7 @@ export const DPadArrow: FC<DPadArrowProps> = ({
       borderBottomWidth: length * 0.5,
       borderLeftColor: "transparent",
       borderRightColor: "transparent",
-      borderBottomColor: "#D9D9D9",
+      borderBottomColor: disabled ? "#606060" : "#D9D9D9",
       ...styleProps
     }
   })

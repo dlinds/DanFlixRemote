@@ -5,9 +5,13 @@ import { DPadSelect } from "../atoms/DPadSelect"
 import { VolumeSlider } from "../atoms/VolumeSlider"
 export interface DPadProps {
   readonly diameter: number
+  readonly disabled?: boolean
 }
 
-export const DPad: FC<DPadProps> = ({ diameter }: DPadProps): ReactElement => {
+export const DPad: FC<DPadProps> = ({
+  diameter,
+  disabled
+}: DPadProps): ReactElement => {
   const [tappedBorder, setTappedBorder] = useState({})
 
   const handleOnDPadTap = (direction: string) => {
@@ -22,7 +26,7 @@ export const DPad: FC<DPadProps> = ({ diameter }: DPadProps): ReactElement => {
       height: diameter,
       borderRadius: diameter / 2,
       borderWidth: diameter * 0.02,
-      backgroundColor: "#488cba",
+      backgroundColor: disabled ? "#303030" : "#488cba",
       borderColor: "#D3D3D3",
       boxShadow:
         "0px 4px 4px rgba(0, 0, 0, 0.25), 0px -4px 4px rgba(0, 0, 0, 0.25)",
@@ -43,6 +47,7 @@ export const DPad: FC<DPadProps> = ({ diameter }: DPadProps): ReactElement => {
         length={diameter / 4}
         onPress={() => handleOnDPadTap("borderLeftWidth")}
         offPress={() => setTappedBorder({})}
+        disabled={disabled}
       />
       <DPadArrow
         rotation="left"
@@ -54,6 +59,7 @@ export const DPad: FC<DPadProps> = ({ diameter }: DPadProps): ReactElement => {
         length={diameter / 4}
         onPress={() => handleOnDPadTap("borderRightWidth")}
         offPress={() => setTappedBorder({})}
+        disabled={disabled}
       />
       <DPadArrow
         rotation="up"
@@ -65,6 +71,7 @@ export const DPad: FC<DPadProps> = ({ diameter }: DPadProps): ReactElement => {
         length={diameter / 4}
         onPress={() => handleOnDPadTap("borderBottomWidth")}
         offPress={() => setTappedBorder({})}
+        disabled={disabled}
       />
       <DPadArrow
         rotation="down"
@@ -76,6 +83,7 @@ export const DPad: FC<DPadProps> = ({ diameter }: DPadProps): ReactElement => {
         length={diameter / 4}
         onPress={() => handleOnDPadTap("borderTopWidth")}
         offPress={() => setTappedBorder({})}
+        disabled={disabled}
       />
       <DPadSelect
         diameter={diameter / 2}

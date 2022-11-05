@@ -74,11 +74,17 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         onLongPress={() => handleSetExactVolume(60)}
         disabled={currentPowerStatus ? false : true}
       >
-        <Button variant="icon" size={40} title="volume-up"></Button>
+        <Button
+          variant="icon"
+          size={40}
+          title="volume-up"
+          containerProps={!currentPowerStatus && { backgroundColor: "#303030" }}
+          childrenProps={!currentPowerStatus && { color: "#606060" }}
+        />
       </TouchableOpacity>
       <VerticalSlider
         value={vertValue ? vertValue : 0}
-        disabled={false}
+        disabled={!currentPowerStatus ? true : false}
         min={0}
         max={60}
         onChange={(value: number) => {
@@ -88,8 +94,8 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         height={300}
         step={0.5}
         borderRadius={15}
-        minimumTrackTintColor={"#79DBDB"}
-        maximumTrackTintColor={"#33666d"}
+        minimumTrackTintColor={!currentPowerStatus ? "#79DBDB" : "#33666d"}
+        maximumTrackTintColor={!currentPowerStatus ? "#33666d" : "#303030"}
         shadowProps={{
           elevation: 5
         }}
@@ -99,7 +105,13 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         onLongPress={() => handleSetExactVolume(0)}
         disabled={currentPowerStatus ? false : true}
       >
-        <Button variant="icon" size={40} title={isMuteIcon}></Button>
+        <Button
+          variant="icon"
+          size={40}
+          title={isMuteIcon}
+          containerProps={!currentPowerStatus && { backgroundColor: "#303030" }}
+          childrenProps={!currentPowerStatus && { color: "#606060" }}
+        />
       </TouchableOpacity>
       <Text>
         {vertValue} {currentPowerStatus ? "true" : "false"}

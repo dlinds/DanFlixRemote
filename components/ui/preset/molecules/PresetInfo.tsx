@@ -30,7 +30,7 @@ const PresetInfo = ({ isActive, inputName }: PresetInfoProps) => {
           alignItems: "flex-start",
           paddingLeft: 15
         }}
-        textProps={{ letterSpacing: 5, fontSize: 12 }}
+        childrenProps={{ letterSpacing: 5, fontSize: 12 }}
         isActiveInput={isActive}
         size={43}
       />

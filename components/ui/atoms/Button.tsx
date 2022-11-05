@@ -9,7 +9,7 @@ export interface ButtonProps {
   readonly alternativeColor?: string
   readonly size?: number
   readonly containerProps?: {}
-  readonly textProps?: {}
+  readonly childrenProps?: {}
 }
 
 const Button: FC<ButtonProps> = ({
@@ -19,7 +19,7 @@ const Button: FC<ButtonProps> = ({
   alternativeColor,
   size,
   containerProps,
-  textProps
+  childrenProps
 }: ButtonProps) => {
   const calcSize = size ? size : 100
 
@@ -32,7 +32,8 @@ const Button: FC<ButtonProps> = ({
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: "gray",
-      elevation: 5
+      elevation: 5,
+      ...containerProps
     },
     button: {
       display: "flex",
@@ -53,13 +54,17 @@ const Button: FC<ButtonProps> = ({
       color: "white",
       letterSpacing: 1.5,
       fontWeight: "500",
-      ...textProps
+      ...childrenProps
     },
     activeButton: {
       backgroundColor: "#79DBDB"
     },
     activeButtonText: {
       color: "black"
+    },
+    iconColor: {
+      color: "white",
+      ...childrenProps
     }
   })
 
@@ -77,7 +82,7 @@ const Button: FC<ButtonProps> = ({
       </View>
     ) : (
       <View style={styles.circleButton}>
-        <Icon name={title} size={calcSize / 2} color="white" />
+        <Icon name={title} size={calcSize / 2} {...styles.iconColor} />
       </View>
     )
   return renderedButton
