@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react"
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native"
+import { Shadow } from "react-native-shadow-2"
 import Icon from "react-native-vector-icons/FontAwesome"
 
 export interface ButtonProps {
@@ -44,7 +45,7 @@ const Button: FC<ButtonProps> = ({
       paddingLeft: 25,
       paddingRight: 25,
       borderRadius: 5,
-      width: "100%",
+      minWidth: "100%",
       height: calcSize ? calcSize : 10,
       minHeight: 40,
       elevation: 5,
@@ -77,9 +78,15 @@ const Button: FC<ButtonProps> = ({
     : styles.buttonText
   const renderedButton =
     variant === "standard" ? (
-      <View style={buttonStyle}>
-        <Text style={textStyle}>{title.toUpperCase()}</Text>
-      </View>
+      <Shadow
+        distance={isActiveInput ? 4 : 0}
+        startColor={"#ffff0070"}
+        endColor={"#263D47"}
+      >
+        <View style={buttonStyle}>
+          <Text style={textStyle}>{title.toUpperCase()}</Text>
+        </View>
+      </Shadow>
     ) : (
       <View style={styles.circleButton}>
         <Icon name={title} size={calcSize / 2} {...styles.iconColor} />

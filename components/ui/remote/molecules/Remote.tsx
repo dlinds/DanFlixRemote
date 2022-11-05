@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   shadow: {
-    borderRadius: 5
+    borderRadius: 5,
+    maxWidth: 131
   },
   remoteContainer: {
     display: "flex",
