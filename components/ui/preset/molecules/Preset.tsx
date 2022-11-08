@@ -1,9 +1,16 @@
 import { useEffect } from "react"
 import React, { useState } from "react"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
-import { useAppSelector } from "../../../modules/hooks"
+import { useAppDispatch, useAppSelector } from "../../../modules/hooks"
 import Button from "../../atoms/Button"
 import PresetInfo from "./PresetInfo"
+import { setInitialPowerStatus } from "../../../modules/Denon/power"
+import {
+  useSendCommandMutation,
+  SendCommandParam,
+  DenonParameters
+} from "../../../modules/store"
+import { setInput } from "../../../modules/Denon/input"
 
 export interface PresetProps {
   readonly inputList: ReadonlyArray<{
@@ -13,13 +20,13 @@ export interface PresetProps {
 }
 
 interface InputTranslator {
-  [key: string]: string
+  [key: string]: DenonParameters
 }
 
 const inputTranslator: InputTranslator = {
-  MPLAY: "DanFlix",
-  GAME: "Nintendo Switch",
-  BD: "Chromecast"
+  DanFlix: "MPLAY",
+  "Nintendo Switch": "GAME",
+  Chromecast: "BD"
 }
 
 const Preset = ({ inputList }: PresetProps) => {
@@ -28,11 +35,13 @@ const Preset = ({ inputList }: PresetProps) => {
   const currentInput: string = useAppSelector(
     (state: any) => state.denonInput.currentInput
   )
+  const [sendCommand, result] = useSendCommandMutation()
+  const dispatch = useAppDispatch()
 
-  const handleSelectPreset = (inputName: string) => {
+  const updateInputItems = (inputName: string) => {
     setInputListItems(prev =>
       prev.map(input =>
-        input.inputName.toUpperCase() === inputName.toUpperCase()
+        inputTranslator[input.inputName] === inputName
           ? {
               ...input,
               isActive: true
@@ -41,10 +50,19 @@ const Preset = ({ inputList }: PresetProps) => {
       )
     )
   }
+  const handleSelectPreset = (inputName: string) => {
+    updateInputItems(inputName)
+    const inputParam: SendCommandParam = {
+      command: "SI",
+      parameter: inputTranslator[inputName]
+    }
+    sendCommand(inputParam)
+    dispatch(setInput(inputName))
+  }
 
   useEffect(() => {
-    handleSelectPreset(inputTranslator[currentInput])
-  }, [currentInput])
+    updateInputItems(currentInput)
+  }, [])
 
   return (
     <View

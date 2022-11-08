@@ -4,6 +4,7 @@ import powerSlice from "./Denon/power"
 import inputSlice from "./Denon/input"
 import { callDenon } from "../modules/Denon/denon"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { RateLimiter } from "limiter"
 export const XMLParser = require("react-xml-parser")
 
 interface InitialState {
@@ -36,9 +37,26 @@ export const denonStatusApi = createApi({
   })
 })
 
-export interface test {
-  command: "PW" | "ZM"
-  parameter: string
+export type DenonCommands = "PW" | "ZM" | "MV" | "SI"
+export type DenonParameters =
+  | "ON"
+  | "STANDBY"
+  | "UP"
+  | "DOWN"
+  | "MPLAY"
+  | "GAME"
+  | "BD"
+  | number
+
+export interface SendCommandParam {
+  command: DenonCommands
+  parameter: DenonParameters
+}
+
+const limiter = new RateLimiter({ tokensPerInterval: 1, interval: 500 })
+
+const awaitLimiter = async () => {
+  const remainingMessages = await limiter.removeTokens(1)
 }
 
 export const denonCommandApi = createApi({
@@ -48,13 +66,14 @@ export const denonCommandApi = createApi({
   }),
   endpoints: builder => ({
     sendCommand: builder.mutation({
-      query: ({ command, parameter }) => ({
+      query: ({ command, parameter }: SendCommandParam) => ({
         url: `?${command}${parameter}`,
         headers: {
           "Content-Type": "application/text"
         },
         method: "GET",
         responseHandler: res => {
+          awaitLimiter()
           return res.text()
         }
       })

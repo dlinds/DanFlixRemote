@@ -30,13 +30,6 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
 
   const [vertValue, setVertValue] = useState(currentVolume)
 
-  // useEffect(() => {
-  //   callDenon("STATUS", "MV").then(res => {
-  //     dispatch(setVolumeAtTurnOn(res))
-  //     setVertValue(res)
-  //   })
-  // }, [])
-
   const handleVolumeDown = () => {
     currentVolume > 0 &&
       (setVertValue(prev => prev - 0.5), dispatch(decrement()))
@@ -84,7 +77,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
       </TouchableOpacity>
       <VerticalSlider
         value={vertValue ? vertValue : 0}
-        disabled={!currentPowerStatus ? true : false}
+        disabled={true}
         min={0}
         max={70}
         onChange={(value: number) => {

@@ -13,7 +13,11 @@ import { useAppSelector, useAppDispatch } from "../../../modules/hooks"
 import { setInitialPowerStatus } from "../../../modules/Denon/power"
 import { Shadow } from "react-native-shadow-2"
 import { callDenon } from "../../../modules/Denon/denon"
-import { denonCommandApi, useSendCommandMutation } from "../../../modules/store"
+import {
+  denonCommandApi,
+  SendCommandParam,
+  useSendCommandMutation
+} from "../../../modules/store"
 
 const Remote = () => {
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
@@ -26,19 +30,20 @@ const Remote = () => {
   const [sendCommand, result] = useSendCommandMutation()
 
   const handlePressPowerButton = () => {
-    const requestParams = currentPowerStatus
-      ? {
-          command: "PW",
-          parameter: "STANDBY"
-        }
-      : {
-          command: "ZM",
-          parameter: "ON"
-        }
+    const powerOffParam: SendCommandParam = {
+      command: "PW",
+      parameter: "STANDBY"
+    }
+
+    const powerOnParam: SendCommandParam = {
+      command: "ZM",
+      parameter: "ON"
+    }
+
+    const requestParams = currentPowerStatus ? powerOffParam : powerOnParam
 
     sendCommand(requestParams)
     dispatch(setInitialPowerStatus(!currentPowerStatus))
-    console.log("result ", result)
   }
 
   return (
@@ -91,7 +96,7 @@ const Remote = () => {
               />
             </View>
             <TouchableOpacity
-              style={{ marginTop: "15%" }}
+              style={{ marginTop: "15%", zIndex: 2 }}
               onPress={() => handlePressPowerButton()}
             >
               <Shadow
@@ -122,12 +127,19 @@ const Remote = () => {
             <VolumeSlider />
           </View>
         </View>
+        {!currentPowerStatus && <View style={styles.overlay} />}
       </View>
     </Shadow>
   )
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 25,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    zIndex: 1
+  },
   container: {
     display: "flex",
     backgroundColor: "#263D47",
@@ -140,7 +152,8 @@ const styles = StyleSheet.create({
     borderColor: "#59A5D8",
     minWidth: 300,
     paddingStart: 25,
-    height: "100%"
+    height: "100%",
+    overlayColor: "black"
   },
   shadow: {
     borderRadius: 5,
