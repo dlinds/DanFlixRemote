@@ -92,6 +92,7 @@ export const DPad: FC<DPadProps> = ({
           alignSelf: "center",
           justifySelf: "center"
         }}
+        disabled={disabled}
       />
     </View>
   )

@@ -1,5 +1,7 @@
+import { useEffect } from "react"
 import React, { useState } from "react"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
+import { useAppSelector } from "../../../modules/hooks"
 import Button from "../../atoms/Button"
 import PresetInfo from "./PresetInfo"
 
@@ -10,13 +12,27 @@ export interface PresetProps {
   }>
 }
 
+interface InputTranslator {
+  [key: string]: string
+}
+
+const inputTranslator: InputTranslator = {
+  MPLAY: "DanFlix",
+  GAME: "Nintendo Switch",
+  BD: "Chromecast"
+}
+
 const Preset = ({ inputList }: PresetProps) => {
   const [inputListItems, setInputListItems] = useState(inputList)
+
+  const currentInput: string = useAppSelector(
+    (state: any) => state.denonInput.currentInput
+  )
 
   const handleSelectPreset = (inputName: string) => {
     setInputListItems(prev =>
       prev.map(input =>
-        input.inputName === inputName
+        input.inputName.toUpperCase() === inputName.toUpperCase()
           ? {
               ...input,
               isActive: true
@@ -25,6 +41,10 @@ const Preset = ({ inputList }: PresetProps) => {
       )
     )
   }
+
+  useEffect(() => {
+    handleSelectPreset(inputTranslator[currentInput])
+  }, [currentInput])
 
   return (
     <View

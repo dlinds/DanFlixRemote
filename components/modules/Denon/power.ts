@@ -15,18 +15,9 @@ export const powerSlice = createSlice({
   reducers: {
     setInitialPowerStatus: (state, action: PayloadAction<boolean>) => {
       return { ...state, isPowered: action.payload }
-    },
-    powerOn: state => {
-      callDenon("SEND", "ZM", "ON")
-      return { ...state, isPowered: true }
-    },
-    powerOff: state => {
-      console.log("powering off receiver")
-      callDenon("SEND", "PW", "STANDBY")
-      return { ...state, isPowered: false }
     }
   }
 })
 
-export const { powerOn, powerOff, setInitialPowerStatus } = powerSlice.actions
+export const { setInitialPowerStatus } = powerSlice.actions
 export default powerSlice.reducer

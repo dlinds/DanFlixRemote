@@ -19,23 +19,23 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
   styleProps
 }: VolumeSliderProps): ReactElement => {
   const currentVolume: number = useAppSelector(
-    (state: any) => state.volume.volume
+    (state: any) => state.denonVolume.volume
   )
 
   const currentPowerStatus: boolean = useAppSelector(
-    (state: any) => state.power.isPowered
+    (state: any) => state.denonPower.isPowered
   )
 
   const dispatch = useAppDispatch()
 
   const [vertValue, setVertValue] = useState(currentVolume)
 
-  useEffect(() => {
-    callDenon("STATUS", "MV").then(res => {
-      dispatch(setVolumeAtTurnOn(res))
-      setVertValue(res)
-    })
-  }, [])
+  // useEffect(() => {
+  //   callDenon("STATUS", "MV").then(res => {
+  //     dispatch(setVolumeAtTurnOn(res))
+  //     setVertValue(res)
+  //   })
+  // }, [])
 
   const handleVolumeDown = () => {
     currentVolume > 0 &&
@@ -43,7 +43,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
   }
 
   const handleVolumeUp = () => {
-    currentVolume < 60 &&
+    currentVolume < 70 &&
       (setVertValue(prev => prev + 0.5), dispatch(increment()))
   }
 
@@ -86,7 +86,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         value={vertValue ? vertValue : 0}
         disabled={!currentPowerStatus ? true : false}
         min={0}
-        max={60}
+        max={70}
         onChange={(value: number) => {
           handleSetExactVolume(value)
         }}
@@ -94,8 +94,8 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         height={300}
         step={0.5}
         borderRadius={15}
-        minimumTrackTintColor={!currentPowerStatus ? "#79DBDB" : "#33666d"}
-        maximumTrackTintColor={!currentPowerStatus ? "#33666d" : "#303030"}
+        minimumTrackTintColor={currentPowerStatus ? "#79DBDB" : "#33666d"}
+        maximumTrackTintColor={currentPowerStatus ? "#33666d" : "#303030"}
         shadowProps={{
           elevation: 5
         }}

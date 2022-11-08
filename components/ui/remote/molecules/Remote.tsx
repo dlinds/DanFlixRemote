@@ -10,32 +10,35 @@ import { VolumeSlider } from "../atoms/VolumeSlider"
 import { DPad } from "./DPad"
 import Button from "../../atoms/Button"
 import { useAppSelector, useAppDispatch } from "../../../modules/hooks"
-import {
-  powerOn,
-  powerOff,
-  setInitialPowerStatus
-} from "../../../modules/Denon/power"
+import { setInitialPowerStatus } from "../../../modules/Denon/power"
 import { Shadow } from "react-native-shadow-2"
 import { callDenon } from "../../../modules/Denon/denon"
+import { denonCommandApi, useSendCommandMutation } from "../../../modules/store"
 
 const Remote = () => {
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
   const currentPowerStatus: boolean = useAppSelector(
-    (state: any) => state.power.isPowered
+    (state: any) => state.denonPower.isPowered
   )
-
-  // console.log(currentPowerStatus)
 
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    callDenon("STATUS", "ZM").then(res => {
-      dispatch(setInitialPowerStatus(res))
-    })
-  }, [])
+  const [sendCommand, result] = useSendCommandMutation()
 
   const handlePressPowerButton = () => {
-    currentPowerStatus ? dispatch(powerOff()) : dispatch(powerOn())
+    const requestParams = currentPowerStatus
+      ? {
+          command: "PW",
+          parameter: "STANDBY"
+        }
+      : {
+          command: "ZM",
+          parameter: "ON"
+        }
+
+    sendCommand(requestParams)
+    dispatch(setInitialPowerStatus(!currentPowerStatus))
+    console.log("result ", result)
   }
 
   return (
