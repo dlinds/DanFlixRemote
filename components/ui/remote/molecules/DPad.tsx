@@ -26,7 +26,7 @@ export const DPad: FC<DPadProps> = ({
       height: diameter,
       borderRadius: diameter / 2,
       borderWidth: diameter * 0.02,
-      backgroundColor: disabled ? "#303030" : "#488cba",
+      backgroundColor: disabled ? "#303030" : "#43697A",
       borderColor: "#D3D3D3",
       boxShadow:
         "0px 4px 4px rgba(0, 0, 0, 0.25), 0px -4px 4px rgba(0, 0, 0, 0.25)",

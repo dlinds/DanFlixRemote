@@ -5,6 +5,7 @@ import inputSlice from "./Denon/input"
 import { callDenon } from "../modules/Denon/denon"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { RateLimiter } from "limiter"
+import { SendCommandParam } from "./interfaces"
 export const XMLParser = require("react-xml-parser")
 
 interface InitialState {
@@ -36,22 +37,6 @@ export const denonStatusApi = createApi({
     })
   })
 })
-
-export type DenonCommands = "PW" | "ZM" | "MV" | "SI"
-export type DenonParameters =
-  | "ON"
-  | "STANDBY"
-  | "UP"
-  | "DOWN"
-  | "MPLAY"
-  | "GAME"
-  | "BD"
-  | number
-
-export interface SendCommandParam {
-  command: DenonCommands
-  parameter: DenonParameters
-}
 
 const limiter = new RateLimiter({ tokensPerInterval: 1, interval: 500 })
 

@@ -1,21 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { callDenon } from "./denon"
 import type { PayloadAction } from "@reduxjs/toolkit"
+import { DenonParameters, ReceiverInput } from "../interfaces"
 
-interface InputState {
-  currentInput: string
-}
-const initialState: InputState = {
-  currentInput: "MPLAY"
+const initialState: ReceiverInput = {
+  id: 0,
+  receiverInput: "MPLAY",
+  nickname: "DanFlix",
+  isActive: true
 }
 
 const inputSlice = createSlice({
   name: "input",
   initialState,
   reducers: {
-    setInput: (state, action: PayloadAction<string>) => {
-      callDenon("SEND", "SI", "ON")
-      return { ...state, currentInput: action.payload }
+    setInput: (state, action: PayloadAction<DenonParameters>) => {
+      return { ...state, receiverInput: action.payload }
     }
   }
 })

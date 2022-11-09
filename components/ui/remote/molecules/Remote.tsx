@@ -13,11 +13,8 @@ import { useAppSelector, useAppDispatch } from "../../../modules/hooks"
 import { setInitialPowerStatus } from "../../../modules/Denon/power"
 import { Shadow } from "react-native-shadow-2"
 import { callDenon } from "../../../modules/Denon/denon"
-import {
-  denonCommandApi,
-  SendCommandParam,
-  useSendCommandMutation
-} from "../../../modules/store"
+import { denonCommandApi, useSendCommandMutation } from "../../../modules/store"
+import { SendCommandParam } from "../../../modules/interfaces"
 
 const Remote = () => {
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
@@ -100,9 +97,9 @@ const Remote = () => {
               onPress={() => handlePressPowerButton()}
             >
               <Shadow
-                distance={currentPowerStatus ? 4 : 0}
-                startColor={"#ffff0070"}
-                endColor={"#263D47"}
+                distance={currentPowerStatus ? 0 : 4}
+                startColor={"#43697A"}
+                endColor={currentPowerStatus ? "#263D47" : "#131E23"}
                 style={styles.shadow}
               >
                 <Button
@@ -111,13 +108,13 @@ const Remote = () => {
                   size={40}
                   containerProps={
                     currentPowerStatus
-                      ? { backgroundColor: "#79DBDB" }
-                      : { backgroundColor: "#43697A" }
+                      ? { backgroundColor: "#43697A" }
+                      : { backgroundColor: "#79DBDB" }
                   }
                   childrenProps={
                     currentPowerStatus
-                      ? { fontSize: 12, color: "black" }
-                      : { fontSize: 12, color: "white" }
+                      ? { fontSize: 12, color: "white" }
+                      : { fontSize: 12, color: "black" }
                   }
                 />
               </Shadow>
@@ -157,7 +154,8 @@ const styles = StyleSheet.create({
   },
   shadow: {
     borderRadius: 5,
-    maxWidth: 131
+    maxWidth: 131,
+    elevation: 5
   },
   remoteContainer: {
     display: "flex",

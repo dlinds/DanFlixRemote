@@ -12,7 +12,7 @@ export const DPadSelect: FC<DPadSelectProps> = ({
   diameter,
   disabled
 }: DPadSelectProps): ReactElement => {
-  const [circleColor, setCircleColor] = useState("#59A5D8")
+  const [circleColor, setCircleColor] = useState("#79DBDB")
 
   const styles = StyleSheet.create({
     circle: {
@@ -36,7 +36,7 @@ export const DPadSelect: FC<DPadSelectProps> = ({
   return (
     <Pressable
       onPress={() => setCircleColor("#265c81")}
-      onPressOut={() => setCircleColor("#59A5D8")}
+      onPressOut={() => setCircleColor("#79DBDB")}
       style={styles.circle}
     >
       <Text style={styles.select}>OK</Text>

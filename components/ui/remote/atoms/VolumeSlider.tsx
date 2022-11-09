@@ -10,6 +10,8 @@ import {
 } from "../../../modules/Denon/volume"
 import { useAppSelector, useAppDispatch } from "../../../modules/hooks"
 import { callDenon } from "../../../modules/Denon/denon"
+import { useSendCommandMutation } from "../../../modules/store"
+import { SendCommandParam } from "../../../modules/interfaces"
 
 export interface VolumeSliderProps {
   readonly styleProps?: {}
@@ -27,23 +29,34 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
   )
 
   const dispatch = useAppDispatch()
-
-  const [vertValue, setVertValue] = useState(currentVolume)
+  const [sendCommand, result] = useSendCommandMutation()
 
   const handleVolumeDown = () => {
-    currentVolume > 0 &&
-      (setVertValue(prev => prev - 0.5), dispatch(decrement()))
+    const volumeDown: SendCommandParam = {
+      command: "MV",
+      parameter: "DOWN"
+    }
+    currentVolume > 0 && dispatch(decrement())
+    sendCommand(volumeDown)
   }
 
   const handleVolumeUp = () => {
-    currentVolume < 70 &&
-      (setVertValue(prev => prev + 0.5), dispatch(increment()))
+    const volumeUp: SendCommandParam = {
+      command: "MV",
+      parameter: "UP"
+    }
+    currentVolume < 70 && dispatch(increment())
+    sendCommand(volumeUp)
   }
 
   const handleSetExactVolume = (value: number) => {
-    setVertValue(value)
+    const exactVolume: SendCommandParam = {
+      command: "MV",
+      parameter: value
+    }
     dispatch(setExact(value))
     setIsMuteIcon(value > 0 ? "volume-down" : "volume-off")
+    sendCommand(exactVolume)
   }
 
   const styles = StyleSheet.create({
@@ -57,7 +70,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
   })
 
   const [isMuteIcon, setIsMuteIcon] = useState(
-    vertValue > 0 ? "volume-down" : "volume-off"
+    currentVolume > 0 ? "volume-down" : "volume-off"
   )
 
   return (
@@ -76,13 +89,10 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         />
       </TouchableOpacity>
       <VerticalSlider
-        value={vertValue ? vertValue : 0}
-        disabled={true}
+        value={currentVolume ? currentVolume : 0}
         min={0}
         max={70}
-        onChange={(value: number) => {
-          handleSetExactVolume(value)
-        }}
+        onChange={() => null}
         width={25}
         height={300}
         step={0.5}
@@ -107,7 +117,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
         />
       </TouchableOpacity>
       <Text>
-        {vertValue} {currentPowerStatus ? "true" : "false"}
+        {currentVolume} {currentPowerStatus ? "true" : "false"}
       </Text>
     </View>
   )

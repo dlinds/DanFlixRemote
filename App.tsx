@@ -26,7 +26,7 @@ const App = () => {
   const {
     isLoading,
     currentData
-  } = denonStatusApi.endpoints.getInitialStatus.useQuery("")
+  } = denonStatusApi.endpoints.getInitialStatus.useQuery("") //this can be changed, see volume slider or remote
 
   const dispatch = useAppDispatch()
 
@@ -38,13 +38,17 @@ const App = () => {
         xml.children[0].children[0].value === "ON" ? true : false
       dispatch(setInitialPowerStatus(powerStatus))
 
-      const currentVolume = xml.children[1].children[4].value
+      const currentVolume = parseFloat(xml.children[1].children[4].value)
       dispatch(setVolumeAtTurnOn(currentVolume))
 
       const currentInput = xml.children[2].children[0].value
       dispatch(setInput(currentInput))
     }
   }, [isLoading])
+
+  const currentPowerStatus: boolean = useAppSelector(
+    (state: any) => state.denonPower.isPowered
+  )
 
   if (!isLoading) {
     return (
@@ -57,6 +61,7 @@ const App = () => {
             <View style={[styles.presetContainer, styles.selectionContainer]}>
               <Preset inputList={seedInputs} />
             </View>
+            {!currentPowerStatus && <View style={styles.overlay} />}
           </View>
           <View style={styles.remoteContainer}>
             <Remote />
@@ -64,16 +69,21 @@ const App = () => {
         </View>
       </SafeAreaProvider>
     )
-  } else {
-    return (
-      <View style={styles.loading}>
-        <Text style={styles.loadingText}>Loading</Text>
-      </View>
-    )
   }
+  return (
+    <View style={styles.loading}>
+      <Text style={styles.loadingText}>Loading</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 25,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    zIndex: 1
+  },
   loading: {
     flex: 1,
     backgroundColor: "#0A100D",
@@ -121,7 +131,8 @@ const styles = StyleSheet.create({
   },
   presetContainer: {
     width: "50%",
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    zIndex: 2
   },
   remoteContainer: {
     width: "33%",
