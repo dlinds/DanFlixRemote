@@ -28,6 +28,5 @@ export const Basic: ComponentStory<typeof PresetInfo> = args => (
 )
 
 Basic.args = {
-  isActive: true,
-  inputName: "DanFlix"
+  preset: { id: 0, isActive: true, nickname: "DanFlix", receiverInput: "MPLAY" }
 }

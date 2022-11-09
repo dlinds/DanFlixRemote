@@ -9,8 +9,7 @@ import {
   setVolumeAtTurnOn
 } from "../../../modules/Denon/volume"
 import { useAppSelector, useAppDispatch } from "../../../modules/hooks"
-import { callDenon } from "../../../modules/Denon/denon"
-import { useSendCommandMutation } from "../../../modules/store"
+import { useSendCommandMutation } from "../../../modules/Denon/denon"
 import { SendCommandParam } from "../../../modules/interfaces"
 
 export interface VolumeSliderProps {

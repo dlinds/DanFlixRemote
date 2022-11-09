@@ -3,12 +3,12 @@ import Remote from "./components/ui/remote/molecules/Remote"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Provider } from "react-redux"
 import React, { useEffect, useState } from "react"
-import { denonStatusApi, store } from "./components/modules/store"
+import { store } from "./components/modules/store"
+import { denonStatusApi } from "./components/modules/Denon/denon"
 import { StyleSheet, Text, View } from "react-native"
 import Preset from "./components/ui/preset/molecules/Preset"
 import { seedInputs } from "./components/ui/preset/molecules/Preset.stories"
 import Category from "./components/ui/category/molecules/Category"
-const XMLParser = require("react-xml-parser")
 import { setInitialPowerStatus } from "./components/modules/Denon/power"
 import { useAppSelector, useAppDispatch } from "./components/modules/hooks"
 import { setVolumeAtTurnOn } from "./components/modules/Denon/volume"
@@ -32,6 +32,7 @@ const App = () => {
 
   useEffect(() => {
     if (currentData) {
+      const XMLParser = require("react-xml-parser")
       const xml = new XMLParser().parseFromString(currentData)
 
       const powerStatus =

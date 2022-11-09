@@ -1,5 +1,5 @@
 import React, { FC, ReactElement, useState } from "react"
-import { View, StyleSheet, Text, Pressable } from "react-native"
+import { StyleSheet, Text, Pressable } from "react-native"
 
 export interface DPadSelectProps {
   readonly diameter: number

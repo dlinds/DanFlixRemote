@@ -2,7 +2,6 @@ import React, { FC, ReactElement, useState } from "react"
 import { View, StyleSheet } from "react-native"
 import { DPadArrow } from "../atoms/DPadArrow"
 import { DPadSelect } from "../atoms/DPadSelect"
-import { VolumeSlider } from "../atoms/VolumeSlider"
 export interface DPadProps {
   readonly diameter: number
   readonly disabled?: boolean

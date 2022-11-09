@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { ComponentMeta, ComponentStory } from "@storybook/react"
 
 import Preset from "./Preset"

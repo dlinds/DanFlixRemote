@@ -16,8 +16,7 @@ export const Basic: ComponentStory<typeof Button> = args => <Button {...args} />
 Basic.args = {
   variant: "standard",
   title: "Test",
-  isActiveInput: false,
-  onPress: () => console.log("clicked")
+  isActiveInput: false
 }
 export const Icon: ComponentStory<typeof Button> = args => <Button {...args} />
 

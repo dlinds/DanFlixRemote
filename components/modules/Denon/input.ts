@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { callDenon } from "./denon"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { DenonParameters, ReceiverInput } from "../interfaces"
 

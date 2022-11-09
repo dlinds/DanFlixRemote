@@ -1,5 +1,5 @@
 import React, { FC, ReactElement } from "react"
-import { View, StyleSheet, Pressable } from "react-native"
+import { StyleSheet, Pressable } from "react-native"
 
 export interface DPadArrowProps {
   readonly rotation: "right" | "left" | "up" | "down"

@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react"
-import { TouchableOpacity, Text, StyleSheet, View } from "react-native"
+import React, { FC } from "react"
+import { Text, StyleSheet, View } from "react-native"
 import { Shadow } from "react-native-shadow-2"
 import Icon from "react-native-vector-icons/FontAwesome"
 

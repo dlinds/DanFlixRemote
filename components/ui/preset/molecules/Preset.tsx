@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { View, TouchableOpacity } from "react-native"
 import { useAppDispatch, useAppSelector } from "../../../modules/hooks"
 import PresetInfo from "./PresetInfo"
-import { useSendCommandMutation } from "../../../modules/store"
+import { useSendCommandMutation } from "../../../modules/Denon/denon"
 import { setInput } from "../../../modules/Denon/input"
 import { db_inputList } from "../../../modules/database"
 import { DenonParameters, SendCommandParam } from "../../../modules/interfaces"
@@ -17,11 +17,9 @@ interface PresetProps {
 
 const Preset = ({ inputList }: PresetProps) => {
   const [inputListItems, setInputListItems] = useState(db_inputList)
-  // console.log("input", inputListItems)
   const currentInput: DenonParameters = useAppSelector(
     (state: any) => state.denonInput.receiverInput
   )
-  // console.log("???", currentInput)
   const [sendCommand, result] = useSendCommandMutation()
   const dispatch = useAppDispatch()
 

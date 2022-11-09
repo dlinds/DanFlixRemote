@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from "react"
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Text
-} from "react-native"
+import React from "react"
+import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native"
 import { VolumeSlider } from "../atoms/VolumeSlider"
 import { DPad } from "./DPad"
 import Button from "../../atoms/Button"
 import { useAppSelector, useAppDispatch } from "../../../modules/hooks"
 import { setInitialPowerStatus } from "../../../modules/Denon/power"
 import { Shadow } from "react-native-shadow-2"
-import { callDenon } from "../../../modules/Denon/denon"
-import { denonCommandApi, useSendCommandMutation } from "../../../modules/store"
+import { useSendCommandMutation } from "../../../modules/Denon/denon"
 import { SendCommandParam } from "../../../modules/interfaces"
 
 const Remote = () => {
