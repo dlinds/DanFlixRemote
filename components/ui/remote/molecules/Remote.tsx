@@ -6,8 +6,9 @@ import Button from "../../atoms/Button"
 import { useAppSelector, useAppDispatch } from "../../../modules/hooks"
 import { setInitialPowerStatus } from "../../../modules/Denon/power"
 import { Shadow } from "react-native-shadow-2"
-import { useSendCommandMutation } from "../../../modules/Denon/denon"
+import { useSendDenonCommandMutation } from "../../../modules/Denon/denon"
 import { SendCommandParam } from "../../../modules/interfaces"
+import { useRokuSendKeyPressMutation } from "../../../modules/TCL/TCL"
 
 const Remote = () => {
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
@@ -17,7 +18,8 @@ const Remote = () => {
 
   const dispatch = useAppDispatch()
 
-  const [sendCommand, result] = useSendCommandMutation()
+  const [sendDenonCommand, result] = useSendDenonCommandMutation()
+  const [sendRokuCommand, rokuResult] = useRokuSendKeyPressMutation()
 
   const handlePressPowerButton = () => {
     const powerOffParam: SendCommandParam = {
@@ -32,7 +34,8 @@ const Remote = () => {
 
     const requestParams = currentPowerStatus ? powerOffParam : powerOnParam
 
-    sendCommand(requestParams)
+    sendDenonCommand(requestParams)
+    sendRokuCommand(currentPowerStatus ? "PowerOff" : "PowerOn")
     dispatch(setInitialPowerStatus(!currentPowerStatus))
   }
 

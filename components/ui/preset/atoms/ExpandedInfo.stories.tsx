@@ -17,7 +17,6 @@ export const Basic: ComponentStory<typeof ExpandedInfo> = args => (
     <ExpandedInfo
       receiverStatus={true}
       receiverInput="DanFlix"
-      tvStatus={true}
       activeRemote="DanFlix"
     />
   </View>

@@ -20,3 +20,5 @@ export interface SendCommandParam {
   command: DenonCommands
   parameter: DenonParameters
 }
+
+export type RokuKeyPresses = "PowerOn" | "PowerOff" | "Home"

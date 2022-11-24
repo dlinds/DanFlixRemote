@@ -4,7 +4,6 @@ import { View, StyleSheet, Text } from "react-native"
 export interface ExpandedInfoProps {
   readonly receiverStatus: boolean
   readonly receiverInput: string
-  readonly tvStatus: boolean
   readonly activeRemote: string
   readonly containerProps?: {}
 }
@@ -12,7 +11,6 @@ export interface ExpandedInfoProps {
 const ExpandedInfo = ({
   receiverStatus,
   receiverInput,
-  tvStatus,
   activeRemote,
   containerProps
 }: ExpandedInfoProps) => {
@@ -42,7 +40,9 @@ const ExpandedInfo = ({
     <View style={styles.container}>
       <Text style={styles.text}>Receiver: {receiverStatus ? "On" : "Off"}</Text>
       <Text style={styles.text}>Input: {receiverInput}</Text>
-      <Text style={styles.text}>TV Status: {tvStatus ? "On" : "Off"}</Text>
+      <Text style={styles.text}>
+        TV Status: {receiverStatus ? "On" : "Off"}
+      </Text>
       <Text style={styles.text}>Active Remote: {activeRemote}</Text>
     </View>
   )

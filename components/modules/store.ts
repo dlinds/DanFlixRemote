@@ -3,6 +3,7 @@ import volumeSlice from "./Denon/volume"
 import powerSlice from "./Denon/power"
 import inputSlice from "./Denon/input"
 import { denonCommandApi, denonStatusApi } from "./Denon/denon"
+import { rokuSendKeyPressApi } from "./TCL/TCL"
 
 interface InitialState {
   denonVolume: { volume: number }
@@ -15,12 +16,14 @@ export const store = configureStore({
     denonPower: powerSlice,
     denonInput: inputSlice,
     [denonStatusApi.reducerPath]: denonStatusApi.reducer,
-    [denonCommandApi.reducerPath]: denonCommandApi.reducer
+    [denonCommandApi.reducerPath]: denonCommandApi.reducer,
+    [rokuSendKeyPressApi.reducerPath]: rokuSendKeyPressApi.reducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
       denonStatusApi.middleware,
-      denonCommandApi.middleware
+      denonCommandApi.middleware,
+      rokuSendKeyPressApi.middleware
     )
 })
 

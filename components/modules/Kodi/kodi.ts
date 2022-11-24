@@ -37,7 +37,7 @@ export const denonCommandApi = createApi({
     baseUrl: "http://192.168.0.55:8080/goform/formiPhoneAppDirect.xml"
   }),
   endpoints: builder => ({
-    sendDenonCommand: builder.mutation({
+    sendCommand: builder.mutation({
       query: ({ command, parameter }: SendCommandParam) => ({
         url: `?${command}${parameter}`,
         headers: {
@@ -54,4 +54,4 @@ export const denonCommandApi = createApi({
 })
 
 export const { useGetInitialStatusQuery } = denonStatusApi
-export const { useSendDenonCommandMutation } = denonCommandApi
+export const { useSendCommandMutation } = denonCommandApi

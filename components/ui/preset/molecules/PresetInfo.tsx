@@ -41,7 +41,6 @@ const PresetInfo = ({ preset }: PresetInfoProps) => {
         <ExpandedInfo
           receiverStatus={currentPowerStatus}
           receiverInput={preset.nickname}
-          tvStatus={true}
           activeRemote={preset.nickname}
           containerProps={{
             paddingLeft: 15

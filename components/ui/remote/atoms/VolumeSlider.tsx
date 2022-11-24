@@ -9,7 +9,7 @@ import {
   setVolumeAtTurnOn
 } from "../../../modules/Denon/volume"
 import { useAppSelector, useAppDispatch } from "../../../modules/hooks"
-import { useSendCommandMutation } from "../../../modules/Denon/denon"
+import { useSendDenonCommandMutation } from "../../../modules/Denon/denon"
 import { SendCommandParam } from "../../../modules/interfaces"
 
 export interface VolumeSliderProps {
@@ -28,7 +28,7 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
   )
 
   const dispatch = useAppDispatch()
-  const [sendCommand, result] = useSendCommandMutation()
+  const [sendCommand, result] = useSendDenonCommandMutation()
 
   const handleVolumeDown = () => {
     const volumeDown: SendCommandParam = {
